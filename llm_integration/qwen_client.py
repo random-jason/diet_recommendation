@@ -522,7 +522,7 @@ class QwenLLMClient:
 # 千问配置 - 从环境变量获取
 def get_qwen_config() -> LLMConfig:
     """获取千问配置"""
-    api_key = os.getenv('QWEN_API_KEY', 'sk-c0dbefa1718d46eaa897199135066f00')
+    api_key = os.getenv('QWEN_API_KEY', '')
     base_url = os.getenv('QWEN_BASE_URL', 'https://dashscope.aliyuncs.com/compatible-mode/v1')
     model = os.getenv('QWEN_MODEL', 'qwen-plus-latest')
     
