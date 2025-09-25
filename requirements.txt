@@ -1,0 +1,30 @@
+# 个性化饮食推荐APP - 依赖包
+
+# 核心依赖
+customtkinter>=5.2.0
+scikit-learn>=1.3.0
+pandas>=2.0.0
+numpy>=1.24.0
+joblib>=1.3.0
+
+# 大模型集成 (千问API)
+requests>=2.31.0
+
+# 配置管理
+python-dotenv>=1.0.0
+
+# 数据处理
+python-dateutil>=2.8.0
+
+# 图像处理 (GUI需要)
+Pillow>=10.0.0
+
+# OCR识别依赖
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+paddleocr>=2.7.0
+easyocr>=1.7.0
+
+# 移动端支持 (可选)
+kivy>=2.1.0
+kivymd>=1.1.1
