@@ -48,19 +48,9 @@ class DietRecommendationApp:
         """加载配置"""
         config = BaseConfig()
         
-        # 从环境变量加载API密钥
-        config.qwen_api_key = os.getenv('QWEN_API_KEY')
-        
-        # 从.env文件加载配置
-        env_file = Path('.env')
-        if env_file.exists():
-            try:
-                from dotenv import load_dotenv
-                load_dotenv()
-                config.qwen_api_key = os.getenv('QWEN_API_KEY')
-            except Exception:
-                # 如果.env文件有编码问题，跳过加载
-                pass
+        # 使用统一API密钥管理
+        from config.api_keys import get_qwen_key
+        config.qwen_api_key = get_qwen_key()
         
         return config
     

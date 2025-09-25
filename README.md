@@ -121,8 +121,8 @@ diet_recommendation_app/
 ### 2. 安装依赖
 ```bash
 # 克隆项目
-git clone <repository-url>
-cd diet_recommendation_app
+git clone https://github.com/random-jason/diet_recommendation.git
+cd diet_recommendation
 
 # 安装基础依赖
 pip install -r requirements.txt
@@ -131,7 +131,22 @@ pip install -r requirements.txt
 pip install pytesseract opencv-python paddleocr easyocr
 ```
 
-### 3. OCR引擎配置（可选）
+### 3. 配置API密钥
+```bash
+# 方法1: 使用自动生成的模板
+python -c "from config.api_keys import create_env_template; create_env_template()"
+
+# 方法2: 手动创建.env文件
+echo "QWEN_API_KEY=your_qwen_api_key_here" > .env
+```
+
+### 4. 验证配置
+```bash
+# 检查API密钥配置状态
+python -c "from config.api_keys import get_api_status_report; print(get_api_status_report())"
+```
+
+### 5. OCR引擎配置（可选）
 
 #### Tesseract安装
 - **Windows**: 下载 [Tesseract安装包](https://github.com/UB-Mannheim/tesseract/wiki)
@@ -165,6 +180,37 @@ python main.py
 4. 点击"开始识别"进行OCR识别
 5. 查看和编辑识别结果
 6. 确认保存到餐食记录
+
+## 🔐 API密钥管理
+
+### 统一密钥管理
+项目采用统一的API密钥管理系统，所有API密钥都通过 `config/api_keys.py` 进行管理：
+
+- **千问API密钥** (必需): 用于主要AI分析服务
+- **OpenAI API密钥** (可选): 备用AI服务
+- **Anthropic API密钥** (可选): 备用AI服务
+- **其他API密钥** (可选): Google、百度、腾讯等
+
+### 配置方法
+```python
+from config.api_keys import get_qwen_key, get_api_status_report
+
+# 获取API密钥
+qwen_key = get_qwen_key()
+
+# 检查配置状态
+status = get_api_status_report()
+print(f"可用提供商: {status['available_list']}")
+```
+
+### 安全特性
+- ✅ 环境变量隔离
+- ✅ 密钥格式验证
+- ✅ 运行时状态监控
+- ✅ 多提供商支持
+- ✅ 自动配置建议
+
+详细配置指南请参考：[API_KEY_SETUP_GUIDE.md](API_KEY_SETUP_GUIDE.md)
 
 ## 🔄 工作流程
 

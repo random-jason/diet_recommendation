@@ -519,10 +519,15 @@ class QwenLLMClient:
         }
 
 
-# 千问配置 - 从环境变量获取
+# 千问配置 - 使用统一API密钥管理
 def get_qwen_config() -> LLMConfig:
     """获取千问配置"""
-    api_key = os.getenv('QWEN_API_KEY', 'sk-c0dbefa1718d46eaa897199135066f00')
+    from config.api_keys import get_qwen_key
+    
+    api_key = get_qwen_key()
+    if not api_key:
+        raise ValueError("千问API密钥未配置，请在.env文件中设置QWEN_API_KEY")
+    
     base_url = os.getenv('QWEN_BASE_URL', 'https://dashscope.aliyuncs.com/compatible-mode/v1')
     model = os.getenv('QWEN_MODEL', 'qwen-plus-latest')
     

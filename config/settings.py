@@ -161,13 +161,16 @@ class UnifiedConfig:
         if os.getenv('DATABASE_PATH'):
             self.database.database_path = os.getenv('DATABASE_PATH')
         
-        # API配置
-        self.api.qwen_api_key = os.getenv('QWEN_API_KEY')
+        # API配置 - 使用统一API密钥管理
+        from config.api_keys import get_api_key_manager
+        api_manager = get_api_key_manager()
+        
+        self.api.qwen_api_key = api_manager.get_qwen_key()
         self.api.qwen_base_url = os.getenv('QWEN_BASE_URL', self.api.qwen_base_url)
         self.api.qwen_model = os.getenv('QWEN_MODEL', self.api.qwen_model)
         
-        self.api.openai_api_key = os.getenv('OPENAI_API_KEY')
-        self.api.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
+        self.api.openai_api_key = api_manager.get_openai_key()
+        self.api.anthropic_api_key = api_manager.get_anthropic_key()
         
         # 应用配置
         if os.getenv('DEBUG'):

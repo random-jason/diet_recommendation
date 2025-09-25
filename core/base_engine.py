@@ -479,8 +479,20 @@ class AIAnalyzer(BaseEngine):
             import openai
             import anthropic
             
-            self.openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-            self.anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+            from config.api_keys import get_openai_key, get_anthropic_key
+            
+            openai_key = get_openai_key()
+            anthropic_key = get_anthropic_key()
+            
+            if openai_key:
+                self.openai_client = openai.OpenAI(api_key=openai_key)
+            else:
+                self.logger.warning("OpenAI API密钥未配置")
+            
+            if anthropic_key:
+                self.anthropic_client = anthropic.Anthropic(api_key=anthropic_key)
+            else:
+                self.logger.warning("Anthropic API密钥未配置")
             
             self._initialized = True
             self.logger.info("AI分析器初始化成功")
